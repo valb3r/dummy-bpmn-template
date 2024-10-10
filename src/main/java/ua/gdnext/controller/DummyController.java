@@ -50,7 +50,7 @@ public class DummyController {
                 (Map) params
         );
 
-        var result = (Integer) historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstanceId).variableName("result").singleResult().getValue();
+        var result = (Integer) runtimeService.getVariable(processInstanceId, "result");
 
         return Map.of(
                 "result",
