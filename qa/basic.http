@@ -5,17 +5,23 @@ X-Request-ID: {{$uuid}}
 
 > {%
     client.assert(response.status === 200, "Response status is not 200");
+    client.assert(response.body.A === "true", "A not set");
+    client.assert(response.body.B === "true", "B not set");
+    client.global.set("processInstanceId", response.body.processInstanceId);
 %}
 
 ### 00. POST required params
-POST http://localhost:8080/v1/required-params
+POST http://localhost:8080/v1/required-params/{{processInstanceId}}
 Content-Type: application/json
 X-Request-ID: {{$uuid}}
 
 {
+  "A": 1,
+  "B": 2
 }
 
 > {%
     client.assert(response.status === 200, "Response status is not 200");
+    client.assert(response.body.result === 3, "result != A+B");
 %}
 
