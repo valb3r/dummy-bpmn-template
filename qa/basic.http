@@ -1,0 +1,21 @@
+### 00. Get required params
+GET http://localhost:8080/v1/required-params
+Content-Type: application/json
+X-Request-ID: {{$uuid}}
+
+> {%
+    client.assert(response.status === 200, "Response status is not 200");
+%}
+
+### 00. POST required params
+POST http://localhost:8080/v1/required-params
+Content-Type: application/json
+X-Request-ID: {{$uuid}}
+
+{
+}
+
+> {%
+    client.assert(response.status === 200, "Response status is not 200");
+%}
+
