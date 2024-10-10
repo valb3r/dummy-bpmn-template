@@ -11,7 +11,11 @@
       <messageEventDefinition messageRef="userProvidedAB"/>
     </intermediateCatchEvent>
     <sequenceFlow id="sid-51f7ba81-0b85-475c-9c60-c732b3073387" sourceRef="sid-530a3866-242c-4f48-a865-ccc28b501af8" targetRef="sid-20589c13-7272-43fa-8b0c-f2004ac87b2f"/>
-    <serviceTask id="sid-c8983c7e-d031-4367-a5dd-c41af930bd4a" flowable:exclusive="true" name="Compute A+B" flowable:delegateExpression="${computeAplusB}"/>
+    <serviceTask id="sid-c8983c7e-d031-4367-a5dd-c41af930bd4a" flowable:exclusive="true" name="Compute A+B" flowable:delegateExpression="${computeAplusB}">
+      <extensionElements>
+        <flowable:executionListener event="end" expression="${dummyController.result.put(execution.processInstanceId, var:get(result))}"/>
+      </extensionElements>
+    </serviceTask>
     <sequenceFlow id="sid-bcf9a35d-425a-4103-939b-b25227904017" sourceRef="sid-20589c13-7272-43fa-8b0c-f2004ac87b2f" targetRef="sid-c8983c7e-d031-4367-a5dd-c41af930bd4a"/>
     <endEvent id="sid-0555c8bc-dd29-4730-853c-7f0e9e587c2b"/>
     <intermediateCatchEvent id="sid-05b593fb-e6ff-4d24-9150-7ab216596625">
@@ -40,11 +44,11 @@
         <omgdi:waypoint x="340.0" y="140.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="shape-f43dc2d2-0735-4a23-b158-8a2603ea40a7" bpmnElement="sid-c8983c7e-d031-4367-a5dd-c41af930bd4a">
-        <omgdc:Bounds x="455.0" y="100.000015" width="100.0" height="80.0"/>
+        <omgdc:Bounds x="455.0" y="99.999985" width="100.0" height="80.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="edge-e584fb6f-dae0-490a-a23a-dd08d1749c54" bpmnElement="sid-bcf9a35d-425a-4103-939b-b25227904017">
         <omgdi:waypoint x="370.0" y="140.0"/>
-        <omgdi:waypoint x="455.0" y="140.00002"/>
+        <omgdi:waypoint x="455.0" y="139.99998"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="shape-e0d8aaeb-68fd-4def-9a25-412b08bb823b" bpmnElement="sid-0555c8bc-dd29-4730-853c-7f0e9e587c2b">
         <omgdc:Bounds x="705.0" y="125.000015" width="30.0" height="30.0"/>
@@ -53,7 +57,7 @@
         <omgdc:Bounds x="610.0" y="125.0" width="30.0" height="30.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="edge-7170066d-5efb-41ae-afe0-34938a70324d" bpmnElement="sid-7d94c518-e38d-4ec5-9b0d-f7fb09e84c44">
-        <omgdi:waypoint x="555.0" y="140.00002"/>
+        <omgdi:waypoint x="555.0" y="139.99998"/>
         <omgdi:waypoint x="610.0" y="140.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="edge-54761de9-9fa0-4b78-84d3-b9bf708dc3bd" bpmnElement="sid-9140ff67-eb8c-40b5-a676-456252d7f9b5">

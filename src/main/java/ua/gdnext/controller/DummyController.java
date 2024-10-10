@@ -2,7 +2,6 @@ package ua.gdnext.controller;
 
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @RestController
@@ -20,11 +20,15 @@ import java.util.stream.Collectors;
 public class DummyController {
 
     private final RuntimeService runtimeService;
-    private final HistoryService historyService;
+    private final ConcurrentHashMap<String, Integer> result;
 
     public DummyController(RuntimeService runtimeService, HistoryService historyService) {
         this.runtimeService = runtimeService;
-        this.historyService = historyService;
+        this.result = new ConcurrentHashMap<>();
+    }
+
+    public ConcurrentHashMap<String, Integer> getResult() {
+        return result;
     }
 
     @GetMapping("/required-params")
@@ -50,7 +54,8 @@ public class DummyController {
                 (Map) params
         );
 
-        var result = (Integer) runtimeService.getVariable(processInstanceId, "result");
+        // Transient data is cleared as soon as we reach wait state (Intermediate message catching event is a wait state)
+        var result = getResult().get(processInstanceId);
 
         return Map.of(
                 "result",

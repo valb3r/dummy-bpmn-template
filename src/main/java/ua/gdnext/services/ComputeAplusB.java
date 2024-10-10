@@ -13,6 +13,6 @@ public class ComputeAplusB implements JavaDelegate {
         var a = (int) execution.getTransientVariable("A");
         var b = (int) execution.getTransientVariable("B");
 
-        execution.setVariable("result", a + b);
+        execution.setTransientVariable("result", a + b);
     }
 }
